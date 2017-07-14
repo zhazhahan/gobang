@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zn-Hans-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="张子涵" />
+<meta name="description" content="五子棋">
+<meta name="keyworks" content="html5,javascript,canvas"/>
+<title>五子棋</title>
+<style>
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	background:#058;
+}
+#canvas{
+	position:absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+}
+</style>
+</head>
+<body>
+<canvas id="canvas" width="595" height="595">您的浏览器不支持html5游戏</canvas>
+//设置环境
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+//加载图片
+var gameBg = new Image();
+gameBg.src = "images/gamebg.jpg";
+var black = new Image();
+black.src = "images/Piece.png";
+var white = new Image();
+white.src = "images/Piece2.png";
+//游戏尺寸
+var scale = 0.7;
+//绘制棋盘
+if(gameBg.src != null){
+ctx.scale(scale, scale);
+ctx.drawImage(gameBg, 0, 0);
+}
+//棋子对象
+var x;
+var y;
+var pieceX = [];
+var pieceY = [];
+var i = 0;
+//交换下子的开关
+var blackOff = true;
+//下棋事件
+var cvs = document.defaultView.getComputedStyle(canvas,null);
+canvas.onclick = function play(e){
+	x = (e.clientX-parseInt(cvs.left))/scale-15;
+	y = (e.clientY-parseInt(cvs.top))/scale-0;
+	//固定到相交线
+	pieceX[i] = (Math.round(x / 60)-1)*59 + 40;
+	pieceY[i] = (Math.round(y / 60)-1)*59 + 40;
+	//棋子不重复
+	var off = true;
+	for(j=0; j<i; j++){
+		if(pieceX[j] == pieceX[i] && pieceY[j] == pieceY[i]){
+			off = false;
+		}
+	}
+	//限制落子范围
+	if(pieceX[i] >= 30 && pieceX[i] <= 800 && pieceY[i] >= 30 && pieceY[i] <= 800){
+		if(off){
+			if(blackOff){
+			ctx.drawImage(black, pieceX[i], pieceY[i]);
+			blackOff = false;
+		}
+		else{
+			ctx.drawImage(white, pieceX[i], pieceY[i]);
+			blackOff = true;
+		}
+			i++;
+		}
+	}
+	
+};
+</script>
+</body>
+</html>
