@@ -1,0 +1,41 @@
+Hi. This is the first lecture in MIT's course 18.06, linear algebra, and I'm Gilbert Strang.
+大家好，这里是麻省理工学院线性代数课程（代码为18.06）的第一节课，我是吉尔波特-斯特朗。
+The text for the course is this book, Introduction on Linear Algebre.
+这门课的教材是这本书——《线性代数导论》
+And the course web page, which has got a lot of exercises from the past, MatLba codes, the syllabus for the course, is web.mit.edu/18.06.
+这门课的网页上有大量的练习题、matlba代码和教学大纲，网址是web.mit.edu/18.06.
+And this is the first lecture, lecture one.
+这是第一讲，Lecture 1。
+So, and later we'll give the web address for viewing these, videotapes.
+等会，我们会给出观看录像的网页地址。
+Okay, so what's in the first lecture? This is my plan.
+好了，所以第一讲，讲什么呢？这是我的计划。
+The fundamental problem fo linear algebra, which is to solve a system of linear equations.
+讲线性代数的基本问题，求解线性方程组。
+So, let's start with a case when we have some number of equations, say n equations and n unknowns.
+所以，让我们开始先从一个例子入手，当我们有了一些方程，假设是n个方程和n个未知数。
+So an equal number of equations and unknowns.
+方程和未知数的数量相等。
+That's the normal, nice case.
+这便是最正常最友好的情况。
+And what I want to do is -- with examples, of course -- to describe, first, what I call the Row picture.
+当然我想先举例来说明“行图像”。
+That's the picture of one equation at a time.
+这是每次只有一个方程的图像。
+It's the picture you've seen before in two by two equations where lines meet.
+这是你以前见过的两两线性相交的方程。
+So in a minute, you'll see lines meeting.
+马上，你就会看见（这种线性相交）。
+The second picture, I'll put a star beside that,
+because that's such an important one.
+然后，我会在图像那标一个星号，因为它很重要。
+And maybe new to you is the picture -- a column at a time.
+你们可能是第一次见到“列图像”。
+And those are the rows and column of a matrix.
+它们是行和列的矩阵。
+So the third -- the algebra way to look at the problem is the matirx form and using a matrix that I'll call A.
+最后，看待问题的代数方法是矩阵，用一个被我称为A的矩阵。
+Okay, so can I do an example? The whole semester will be examples and then see what's going on with the example.
+我可以举一个例子吗？这整个学期会有很多的例子，来看看这些例子是怎么回事吧。
+So, take an example. Two equations, two unknowns.
+好，举个例子。两个方程，两个未知数。

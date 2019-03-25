@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html{
+        font-size: 10px;
+    }
+    ul{
+        margin:0 auto 0;
+        max-width: 80rem;
+        width:100%;
+        min-width: 36rem;
+        list-style: none;
+    }
+    ul li{
+        float: left;
+        width: 36rem;
+        height: 3rem;
+        font-size: 1.6rem;
+        background: rgba(200, 200, 200, 1);
+        text-align: center;
+        line-height: 3rem;
+    }
+    ul li button{
+        width: 15rem;
+        height: 2.5rem;
+    }
+    ul li div{
+        float: left;
+        width: 18rem;
+        height: 2rem;
+    }
+    ul li input{
+        width: 17rem;
+        height: 2rem;
+        border: #fff solid 0px;
+        font-size: 1.6rem;
+    }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>
+            <button class="send">提交</button>
+            <button class="redo">重做</button>
+        </li>
+        <li>
+            <button class="turn">中英</button>
+            <button class="bank">题库</button>
+        </li>
+    </ul>
+    <script src="js/jquery.js"></script>
+    <script>
+        /*function patch(re,s){
+        re=eval("/"+re+"/ig")
+        return s.match(re).length;
+        }
+        var s = 'tools.jb51.net';
+        alert(patch('t',s)); //弹出2*/
+        var log = console.log.bind(console);
+        //时间戳
+        var time_stamp = '?t='+new Date().getTime();
+        //载入文本信息
+        var ajax = $.ajax({url:"English.txt"+time_stamp, async:false});
+        log(ajax.responseText);
+        //分割文本
+        var text = ajax.responseText.split("\n");
+        //
+        //单词数量
+        var num = 0;
+        while(text[num] != null){
+            num++
+        }
+        //动态添加li
+        var ul = $("ul");
+        for(var i=0; i<num; i++){
+            ul.append("<li><div></div><input></li>");
+        }
+        //给li们赋上class
+        $("ul li div").attr("class", "ask");
+        $("ul li input").attr("class", "key");
+        var ask = $(".ask");
+        var key = $(".key");
+        var send = $(".send");
+        var redo = $(".redo");
+        var turn = $(".turn");
+        var bank = $(".bank");
+        var show_en = true;
+        var en = [];
+        var ch = [];
+        //分割英文和中文
+        for(var i=0; i<num; i++){
+            var temp = text[i].split("--");
+            en[i] = temp[0];
+            ch[i] = temp[1];
+        }
+        //出题
+        var question = function(){
+            if(show_en){
+                //出题（汉译英）
+                for(var i=0; i<num; i++){
+                    ask.eq(i).text(ch[i]);
+                }
+            }
+            else{
+                //出题（英译汉）
+                for(var i=0; i<num; i++){
+                    ask.eq(i).text(en[i]);
+                }
+            }
+        }
+        //交卷
+        var answer = function(){
+            send.click(function(){
+                var right = 0;
+                var wrong = 0;
+                if(show_en){
+                    //（汉译英）
+                    for(var i=0; i<num; i++){
+                        //进行比较
+                        if(key.eq(i).val() == en[i]){
+                            right++;
+                            ask.eq(i).css("background-color","rgba(80, 230, 80, 1)");
+                        }
+                        else{
+                            wrong++;
+                            ask.eq(i).css("background-color","rgba(255, 80, 80, 1)");
+                        }
+                    }
+                }
+                else{
+                    //（英译汉）
+                   for(var i=0; i<num; i++){
+                        //删除ch里的回车
+                        var c = ch[i].substring(0, ch[i].length-1);
+                        //进行比较
+                        if(key.eq(i).val() == c){
+                            right++;
+                            ask.eq(i).css("background-color","rgba(80, 230, 80, 1)");
+                        }
+                        else{
+                            wrong++;
+                            ask.eq(i).css("background-color","rgba(255, 80, 80, 1)");
+                        }
+                    }
+                }
+                alert("答对的题数: "+right+"\n做错的题数: "+wrong);
+            });
+        }
+        //首次出题和监听交卷
+        question();
+        answer();
+        //重做
+        var again = function(){
+            for(var i=0; i<num; i++){
+                //清空回答
+                key.eq(i).val("");
+                //消除标记
+                ask.eq(i).css("background-color","rgba(200, 200, 200, 1)");
+            }
+        }
+        redo.click(function(){
+            again();
+        });
+        //切换中英文
+        turn.click(function(){
+            //切换标题
+            if(show_en){
+                turn.text("英中");
+            }
+            else{
+                turn.text("中英");
+            }
+            //更改状态
+            show_en = !show_en;
+            //重新出题
+            question();
+        });
+        //题库
+        bank.click(function(){
+            alert("暂不能用");
+        });
+    </script>
+</body>
+</html>
